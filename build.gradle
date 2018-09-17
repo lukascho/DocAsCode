@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctorj-diagram:1.5.4.1'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.6'
+    }
+}
+
+plugins {
+    id 'org.asciidoctor.convert' version '1.5.3'
+    id 'com.github.jruby-gradle.base' version '1.4.0'
+}
+
+repositories {
+    maven {
+        url 'http://rubygems-proxy.torquebox.org/releases'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.asciidoctor.convert'
+
+version = '1.0.0-SNAPSHOT'
+
+dependencies {
+    gems 'rubygems:asciidoctor-diagram:1.5.10'
+}
+
+asciidoctorj {
+    version = '1.5.6'
+}
+
+asciidoctor {
+    sourceDir = file('src/docs/asciidoc')
+    outputDir = file('build/docs')
+    logDocuments = true
+
+    dependsOn jrubyPrepare
+    requires = ['asciidoctor-diagram']
+    gemPath = jrubyPrepare.outputDir
+
+    attributes \
+        'build-gradle': file('build.gradle'),
+        'sourcedir': project.sourceSets.main.java.srcDirs[0],
+        'endpoint-url': 'http://ruv.de',
+        'source-highlighter': 'coderay',
+        'imagesdir': 'images',
+        'toc': 'left',
+        'icons': 'font',
+        'setanchors': '',
+        'idprefix': '',
+        'idseparator': '-',
+        'docinfo1': ''
+}

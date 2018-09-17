@@ -1,0 +1,99 @@
+:revnumber: {project-version}
+ifndef::imagesdir[:imagesdir: images]
+
+# Documentation as a Code
+
+
+## Software Dokumentation als Quality
+
+Gute Software Entwicklung fängt mit der Dokumentation an.
+
+
+## Vorteile von Documentation as a Code
+
+* Ascii-doc als reines ASCII-Format stellt kaum Anforderungen an die Entwicklungsumgebung, ein einfacher Texteditor ist
+das einzige benötigte Werkzeug für das Editieren der Inhalte.
+
+* Die Inhalte der Dokumentation werden zusammen mit dem Quellcode und anderen Ressourcen im Versionskontrollsystem
+eingecheckt und sind damit für die Entwickler immer zu Hand.
+
+* Alle Vorteile eines Versionskontrollsystems sind auch für die Dokumentation der Architektur nutzbar:
+    ** Änderungsprotokollierung
+    ** Wiederherstellung
+    ** Versionierung
+    ** Branching/Merging.
+
+* Die Integration in den Build-Prozess sorgt dafür, dass die Architekturdokumentation ein weiteres Artefakt des
+Softwaresystems ist und damit auf einer Stufe steht mit ausführbaren Binärdateien oder Quellcodedokumentation.
+
+
+## Vorlagen für Architekturbeschreibungen
+* arc42
+
+
+## ASCII DOC
+== Source Code
+
+[source,java]
+.Java code from project
+----
+include::{sourcedir}/example/StringUtils.java[tags=contains,indent=0]
+----
+
+== Images
+
+[.thumb]
+image::sunset.jpg[scaledwidth=75%]
+
+
+## UML mit PlantUML
+
+
+### Klassen-Diagramme
+
+[plantuml, diagram-classes, png]
+....
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+....
+
+
+### Komponenten-Diagramme
+
+[plantuml, "diag-com", png]
+----
+@startuml
+
+actor User
+
+component Comp1
+component Comp2
+
+folder "System"
+
+User --> System
+System ..> Comp1
+System ..> Comp2
+
+@enduml
+----
+
+
+### Sequenz-Diagramme
+[plantuml, "diag-sequence", png]
+----
+@startuml
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+
+@enduml
+----
